@@ -14,6 +14,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -27,6 +29,7 @@ class MainViewModel @Inject constructor(
 
     val searchQuery = MutableLiveData("")
     val onError = MutableStateFlow<Result.Error?>(null)
+    val onProgress = MutableLiveData<Boolean>()
 
     fun searchProduct() = Pager(
         config = PagingConfig(
@@ -37,6 +40,7 @@ class MainViewModel @Inject constructor(
     ).flow
 
     private suspend fun fetchProducts(query: String, page: Int): ProductResponse? {
+        onProgress.postValue(true)
         return withContext(Dispatchers.IO) {
             var response: ProductResponse? = null
             coolBlueRepository.searchProducts(query, page).collect {
@@ -48,6 +52,7 @@ class MainViewModel @Inject constructor(
                     }
                 }
             }
+            onProgress.postValue(false)
             return@withContext response
         }
     }

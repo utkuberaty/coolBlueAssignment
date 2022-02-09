@@ -3,6 +3,7 @@ package com.utku.coolblueassignment.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
@@ -19,4 +20,11 @@ import kotlinx.coroutines.launch
 class MainActivity : BaseActivity<ActivityMainBinding>({ ActivityMainBinding.inflate(it) }) {
 
     override val viewModel: MainViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.onProgress.observe(this) {
+            viewBinding.progressBarConstraintLayout.visibility = if (it) View.VISIBLE else View.GONE
+        }
+    }
 }

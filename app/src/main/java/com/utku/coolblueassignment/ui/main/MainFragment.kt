@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +28,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>({ FragmentMainBinding.inf
 
     private val productAdapter by lazy { ProductAdapter() }
 
-    override val viewModel: MainViewModel by viewModels()
+    override val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
