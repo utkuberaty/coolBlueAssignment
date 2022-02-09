@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ReviewSummary(
-    val reviewAverage: String = "",
+    val reviewAverage: Float = 0.0F,
     val reviewCount: Int = 0
 )

@@ -19,18 +19,4 @@ import kotlinx.coroutines.launch
 class MainActivity : BaseActivity<ActivityMainBinding>({ ActivityMainBinding.inflate(it) }) {
 
     override val viewModel: MainViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        lifecycleScope.launch {
-            viewModel.searchProduct("apple", 1).collect {
-                when (it) {
-                    is Result.Success -> Log.i(TAG, "success => ${it.data}")
-                    is Result.Error -> Log.i(TAG, "$it")
-                }
-            }
-
-        }
-    }
 }
